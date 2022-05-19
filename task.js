@@ -17,23 +17,37 @@ for (const checkbox of allCheckbox) {
             
 
             if (checkbox.closest('.interests_active') != null) {
-                checkboxList = checkbox.closest('.interests_active').querySelectorAll('.interest__check');
-                let checkboxListCheckedCounter = 0;
-                for (checkboxListItem of checkboxList) {
-                    if (checkboxListItem.checked) {
-                        checkboxListCheckedCounter += 1;
-                    }
+                function checkUp(checkbox) {
+                    if (checkbox.closest('.interests_active') != null) {
 
-                    const upCheckbox = checkbox.closest('.interests_active').closest('.interest').querySelector('.interest__check');
-                    if (checkboxList.length === checkboxListCheckedCounter) {
-                        upCheckbox.checked = true;
-                    }
-                    else {
-                        upCheckbox.checked = false;
+                        checkboxList = checkbox.closest('.interests_active').querySelectorAll('.interest__check');
+                        let checkboxListCheckedCounter = 0;
+
+                        const upCheckbox = checkbox.closest('.interests_active').closest('.interest').querySelector('.interest__check');
+
+                        for (checkboxListItem of checkboxList) {
+                            if (checkboxListItem.checked) {
+                                checkboxListCheckedCounter += 1;
+                            }
+                        
+                            if (checkboxList.length === checkboxListCheckedCounter) {
+                                upCheckbox.checked = true;
+                                upCheckbox.indeterminate = false;
+                            }
+                            else if (checkboxListCheckedCounter === 0) {
+                                upCheckbox.indeterminate = false;
+                                upCheckbox.checked = false;
+                            }
+                            else {
+                                upCheckbox.indeterminate = true;
+                            }
+                        }
+                        checkUp(upCheckbox);
+
                     }
                 }
+                
+                checkUp(checkbox);                
             }
-             
-            
         });
     }
